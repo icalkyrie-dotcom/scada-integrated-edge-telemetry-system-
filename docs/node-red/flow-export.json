@@ -1,0 +1,140 @@
+[
+    {
+        "id": "a6ca80c2c9aa2fd9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "14532efad9fa6f3d",
+        "type": "mqtt in",
+        "z": "a6ca80c2c9aa2fd9",
+        "name": "",
+        "topic": "plant/area1/esp32_001/telemetry",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "d8bb1b9a31b8064f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "0a13a4eb05ea8b8e",
+                "23db5da964db1253"
+            ]
+        ]
+    },
+    {
+        "id": "0a13a4eb05ea8b8e",
+        "type": "debug",
+        "z": "a6ca80c2c9aa2fd9",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "23db5da964db1253",
+        "type": "function",
+        "z": "a6ca80c2c9aa2fd9",
+        "name": "mqtt to influxdb",
+        "func": "msg.payload = [\n{\n    temperature: msg.payload.temperature,\n    humidity: msg.payload.humidity,\n    pressure: msg.payload.pressure\n}\n];\n\nmsg.tags = {\n    device: \"ESP32_RTU_001\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "23819958c095566d"
+            ]
+        ]
+    },
+    {
+        "id": "23819958c095566d",
+        "type": "influxdb out",
+        "z": "a6ca80c2c9aa2fd9",
+        "influxdb": "9be3de2a04b364bf",
+        "name": "",
+        "measurement": "esp32_telemetry",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IIOT",
+        "bucket": "iiot_telemetry",
+        "x": 770,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d8bb1b9a31b8064f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.18.11",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9be3de2a04b364bf",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://127.0.0.1:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "6424c508859b92d5",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
