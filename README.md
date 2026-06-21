@@ -70,7 +70,7 @@ Full data flow diagram: [`docs/architecture/data-flow-diagram.png`](docs/archite
 
 ## Hardware Setup
 
-![ESP32 + BME280 Setup](docs/hardware/01-esp32-bme280-setup.jpg)
+![ESP32 + BME280 Setup](docs/hardware/01-esp32-bme280-setup.png)
 
 The system runs on a physical ESP32 DevKit connected to a BME280 sensor via I2C, validated end-to-end on real hardware — not simulated.
 
